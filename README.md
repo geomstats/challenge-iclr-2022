@@ -2,6 +2,7 @@
 
 Welcome to the ICLR Computational Geometry & Topology challenge 2022!
 
+Lead organizers: Saiteja Utpala (UC Santa Barbara) and Nina Miolane (UC Santa Barbara)
 
 ## Description of the challenge
 
