@@ -67,7 +67,7 @@ Here is a non-exhaustive list of possible submissions:
 
 The notebooks provided in the `submission-example-*` folders are examples of submissions that can help the participants to design their proposal and to understand how to use/inherit from Scikit-Learning, Geomstats, Pytorch. Note that these examples are "naive" on purpose and are only meant to give illustrative templates rather than to provide a meaningful data analysis. More examples on how to use the packages can be found on the GitHub repository of [Geomstats](https://github.com/geomstats/geomstats).
 
-The code should be compatible with Python 3.8 and make an effort to respect the Python style guide [PEP8](https://www.python.org/dev/peps/pep-0008/). The portion of the code using `geomstats` only needs to run with `numpy` or `pytorch` backends.
+The code should be compatible with Python 3.8 and make an effort to respect the Python style guide [PEP8](https://www.python.org/dev/peps/pep-0008/). The portion of the code using `geomstats` only needs to run with `numpy` or `pytorch` backends. However, it will be appreciated by the reviewers/voters if the code can run in all backends: `numpy`, `autograd`, `tensorflow` and `pytorch`, using geomstats `gs.`, when applicable.
 
 The Jupyter notebooks are automatically tested when a Pull Request is submitted. The tests have to pass. Their running time should not exceed 3 hours, although exceptions can be made by contacting the challenge organizers.
 
@@ -100,7 +100,7 @@ import sys
 The [Condorcet method](https://en.wikipedia.org/wiki/Condorcet_method) will be used to rank the submissions and decide on the winners. The evaluation criteria will be:
 1. How "interesting" is the learning algorithm? E.g.:
   - it is not "only" a learning algorithm run on the tangent space of a manifold
-3. How readable/clean is the implementation? How well does the submission respect Scikit-Learn/Geomstats/Pytorch's APIs.
+3. How readable/clean is the implementation? How well does the submission respect Scikit-Learn/Geomstats/Pytorch's APIs? If applicable: does it run across backends?
 4. Is the submission well-written? Does the docstring help understand the method?
 5. How informative are the tests on synthetic datasets, the benchmarks, and the real-world application?
 
