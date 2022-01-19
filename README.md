@@ -6,14 +6,13 @@ Lead organizers: Saiteja Utpala (UC Santa Barbara) and Nina Miolane (UC Santa Ba
 
 ## Description of the challenge
 
-The purpose of this challenge is to push forward the fields of computational differential geometry and topology.
+The purpose of this challenge is to foster reproducible research in geometric (deep) learning, by crowdsourcing the open-source implementation of learning algorithms on manifolds. Participants are asked to contribute code for a published/unpublished algorithm, following Scikit-Learn/Geomstats' or pytorch's APIs, benchmark it, and demonstrate its use in real-world scenarios.
+
+Each submission takes the form of a Jupyter Notebook leveraging the coding infrastructure from the package [Geomstats](https://github.com/geomstats/geomstats). The participants submit their Jupyter Notebook via [Pull Requests](https://github.com/geomstats/challenge-iclr-2022/pulls) (PR) to this GitHub repository, see [Guidelines](#guidelines) below.
 
 All participants will have the opportunity to co-author a white paper summarizing the findings of the challenge.
 
-Each submission takes the form of a Jupyter Notebook leveraging the package [Geomstats](https://github.com/geomstats/geomstats). The participants submit their Jupyter Notebook via [Pull Requests](https://github.com/geomstats/challenge-iclr-2022/pulls) (PR) to this GitHub repository, see [Guidelines](#guidelines) below.
-
 **Note:** _We invite participants to review this README regularly, as details are added to the guidelines when questions are submitted to the organizers._
-
 
 ## Deadline
 
@@ -49,15 +48,26 @@ Teams are accepted and there is no restriction on the number of team members.
 The principal developpers of Geomstats (i.e. the co-authors of Geomstats published papers) are not allowed to participate.
 
 A submission should respect the following Jupyter Notebook’s structure:
-- TBD
+1. Introduction and Motivation
+  - Explain and motivate the choice of learning algorithm
+2. Related Works and Implementations
+  - Contrast the chosen learning algorithms with other algorithms
+  - Describe existing implementations, if any
+3. Implementation of the Learning Algorithm --- with guidelines:
+  - Follow Scikit-Learn/Geomstats APIs, see [RiemannianKMeans](https://github.com/geomstats/geomstats/blob/d89ee0a4eb8cd178a5de5bccc095fda52d9c0732/geomstats/learning/kmeans.py#L16) example, or Pytorch base classes such as `torch.nn.Module`.
+  - Use Geomstats computational primitives (e.g. exponential, geodesics, parallel transport, etc).
+4. Test on Synthetic Datasets and Benchmark
+5. Application to Real-World Datasets
 
 Here is a non-exhaustive list of possible submissions:
-- TBD
-Etc.
+- Gaussian Processes on Riemannian Manifolds
+- Kalman Filters on Lie groups
+- Variational autoencoders on Riemannian manifolds
+- Etc.
 
-The notebooks provided in the `submission-example-*` folders are examples of data analysis submissions that can help the participants to design their proposal and to understand how to use the packages. Note that these examples are "naive" on purpose and are only meant to give illustrative notebooks templates rather than to provide a meaningful data analysis. More examples on how to use the packages can be found on the GitHub repository of [Geomstats](https://github.com/geomstats/geomstats).
+The notebooks provided in the `submission-example-*` folders are examples of submissions that can help the participants to design their proposal and to understand how to use/inherit from Scikit-Learning, Geomstats, Pytorch. Note that these examples are "naive" on purpose and are only meant to give illustrative templates rather than to provide a meaningful data analysis. More examples on how to use the packages can be found on the GitHub repository of [Geomstats](https://github.com/geomstats/geomstats).
 
-The code should be compatible with Python 3.8 and make an effort to respect the Python style guide [PEP8](https://www.python.org/dev/peps/pep-0008/). The portion of the code using `geomstats` only needs to run with `numpy` backend, `pytorch` and `tensorflow` backends are not required.
+The code should be compatible with Python 3.8 and make an effort to respect the Python style guide [PEP8](https://www.python.org/dev/peps/pep-0008/). The portion of the code using `geomstats` only needs to run with `numpy` or `pytorch` backends.
 
 The Jupyter notebooks are automatically tested when a Pull Request is submitted. The tests have to pass. Their running time should not exceed 3 hours, although exceptions can be made by contacting the challenge organizers.
 
@@ -87,9 +97,16 @@ import sys
 
 ## Evaluation and ranking
 
-The [Condorcet method](https://en.wikipedia.org/wiki/Condorcet_method) will be used to rank the submissions and decide on the winners. The main evaluation criterion is general and encourages participants to be creative: "how does the submission help push forward the fields of computational geometry and topology?".
+The [Condorcet method](https://en.wikipedia.org/wiki/Condorcet_method) will be used to rank the submissions and decide on the winners. The evaluation criteria will be:
+1. How "interesting" is the learning algorithm? E.g.:
+  - it is not "only" a learning algorithm run on the tangent space of a manifold
+3. How readable/clean is the implementation? How well does the submission respect Scikit-Learn/Geomstats/Pytorch's APIs.
+4. Is the submission well-written? Does the docstring help understand the method?
+5. How informative are the tests on synthetic datasets, the benchmarks, and the real-world application?
 
-Selected Geomstats/Giotto-tda maintainers and collaborators, as well as each team whose submission respects the guidelines, will vote once on Google Form to express their preference for the 3 best submissions. Note that each team gets only one vote, even if there are several participants in the team.
+Note that these criteria do not reward new learning algorithms, nor learning algorithms that outperform the state-of-the-art --- but rather clean code and exhaustive tests that will foster reproducible research in our field.
+
+Selected Geomstats maintainers and collaborators, as well as each team whose submission respects the guidelines, will vote once on Google Form to express their preference for the 3 best submissions according to each criterion. Note that each team gets only one vote, even if there are several participants in the team.
 
 The 3 preferences must all 3 be different: e.g. one cannot select the same Jupyter notebook for both first and second place. Such irregular votes will be discarded. A link to a Google Form will be provided to record the votes. It will be required to insert an email address to identify the voter. The voters will remain secret, only the final ranking will be published.
 
