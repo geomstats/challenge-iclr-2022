@@ -1,16 +1,18 @@
 # ICLR Computational Geometry & Topology Challenge 2022
 
-Welcome to the ICLR Computational Geometry & Topology challenge 2022!
+Welcome to the ICLR 2022 Computational Geometry & Topology challenge 2022 --- by the [ICLR 2022 Workshop on Geometrical and Topological Representation Learning](https://gt-rl.github.io/).
 
-Lead organizers: Saiteja Utpala (UC Santa Barbara) and Nina Miolane (UC Santa Barbara)
+Lead organizers: Saiteja Utpala (UC Santa Barbara) and Nina Miolane (UC Santa Barbara).
 
 ## Description of the challenge
 
-The purpose of this challenge is to foster reproducible research in geometric (deep) learning, by crowdsourcing the open-source implementation of learning algorithms on manifolds. Participants are asked to contribute code for a published/unpublished algorithm, following Scikit-Learn/Geomstats' or pytorch's APIs, benchmark it, and demonstrate its use in real-world scenarios.
+The purpose of this challenge is to foster reproducible research in geometric (deep) learning, by crowdsourcing the open-source implementation of learning algorithms on manifolds. Participants are asked to contribute code for a published/unpublished algorithm, following Scikit-Learn/Geomstats' or pytorch's APIs and computational primitives, benchmark it, and demonstrate its use in real-world scenarios.
 
-Each submission takes the form of a Jupyter Notebook leveraging the coding infrastructure from the package [Geomstats](https://github.com/geomstats/geomstats). The participants submit their Jupyter Notebook via [Pull Requests](https://github.com/geomstats/challenge-iclr-2022/pulls) (PR) to this GitHub repository, see [Guidelines](#guidelines) below.
+Each submission takes the form of a Jupyter Notebook leveraging the coding infrastructure and building blocks from the package [Geomstats](https://github.com/geomstats/geomstats). The participants submit their Jupyter Notebook via [Pull Requests](https://github.com/geomstats/challenge-iclr-2022/pulls) (PR) to this GitHub repository, see [Guidelines](#guidelines) below.
 
-All participants will have the opportunity to co-author a white paper summarizing the findings of the challenge.
+In addition to the challenge's prizes, participants will have the opportunity to co-author a white paper summarizing the findings of the competition.
+
+This is the second edition of this challenge! Feel free to look at [last year's guidelines, submissions](https://github.com/geomstats/challenge-iclr-2021), [winners](https://gt-rl.github.io/2021/challenge) and [paper](https://arxiv.org/abs/2108.09810) for additional information.
 
 **Note:** _We invite participants to review this README regularly, as details are added to the guidelines when questions are submitted to the organizers._
 
