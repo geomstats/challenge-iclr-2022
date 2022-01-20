@@ -89,7 +89,7 @@ A participant can raise GitHub issues and/or request help or guidance at any tim
 
 Datasets larger than 10MB shall be directly imported from external URLs or from data sharing platforms such as OpenML.
 
-If your project requires external pip installable libraries that are not amongst Geomstats’ and Giotto-tda’s requirements.txt, you can include them at the beginning of your Jupyter notebook, e.g. with:
+If your project requires external pip installable libraries that are not amongst Geomstats’ requirements.txt, you can include them at the beginning of your Jupyter notebook, e.g. with:
 ```
 import sys
 !{sys.executable} -m pip install numpy scipy torch
@@ -98,11 +98,10 @@ import sys
 ## Evaluation and ranking
 
 The [Condorcet method](https://en.wikipedia.org/wiki/Condorcet_method) will be used to rank the submissions and decide on the winners. The evaluation criteria will be:
-1. How "interesting" is the learning algorithm? E.g.:
-  - it is not "only" a learning algorithm run on the tangent space of a manifold
-3. How readable/clean is the implementation? How well does the submission respect Scikit-Learn/Geomstats/Pytorch's APIs? If applicable: does it run across backends?
-4. Is the submission well-written? Does the docstring help understand the method?
-5. How informative are the tests on synthetic datasets, the benchmarks, and the real-world application?
+1. How "interesting"/"important"/"useful" is the learning algorithm? Note that this is a subjective evaluation criterion, where the reviewers will evaluate what the implementation of this algorithm brings to the community (regardless of the quality of the code).
+2. How readable/clean is the implementation? How well does the submission respect Scikit-Learn/Geomstats/Pytorch's APIs? If applicable: does it run across backends?
+3. Is the submission well-written? Does the docstrings help understand the methods?
+4. How informative are the tests on synthetic datasets, the benchmarks, and the real-world application?
 
 Note that these criteria do not reward new learning algorithms, nor learning algorithms that outperform the state-of-the-art --- but rather clean code and exhaustive tests that will foster reproducible research in our field.
 
