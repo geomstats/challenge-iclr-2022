@@ -1,5 +1,5 @@
 autograd>=1.3
-geomstats>=2.2.2
+git+https://github.com/geomstats/geomstats.git
 joblib==0.14.1
 jupyter
 matplotlib
