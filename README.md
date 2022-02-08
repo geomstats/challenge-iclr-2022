@@ -57,17 +57,28 @@ A submission should respect the following Jupyter Notebook’s structure:
   - Describe existing implementations, if any
 3. Implementation of the Learning Algorithm --- with guidelines:
   - Follow Scikit-Learn/Geomstats APIs, see [RiemannianKMeans](https://github.com/geomstats/geomstats/blob/d89ee0a4eb8cd178a5de5bccc095fda52d9c0732/geomstats/learning/kmeans.py#L16) example, or Pytorch base classes such as `torch.nn.Module`.
-  - Use Geomstats computational primitives (e.g. exponential, geodesics, parallel transport, etc).
+  - IMPORTANT: Use Geomstats computational primitives (e.g. exponential, geodesics, parallel transport, etc).
 4. Test on Synthetic Datasets and Benchmark
 5. Application to Real-World Datasets
 
-Here is a non-exhaustive list of possible submissions:
-- Gaussian Processes on Riemannian Manifolds
-- Kalman Filters on Lie groups
-- Variational autoencoders on Riemannian manifolds
-- Etc.
+## Examples of possible submissions
 
-The notebooks provided in the `submission-example-*` folders are examples of submissions that can help the participants to design their proposal and to understand how to use/inherit from Scikit-Learning, Geomstats, Pytorch. Note that these examples are "naive" on purpose and are only meant to give illustrative templates rather than to provide a meaningful data analysis. More examples on how to use the packages can be found on the GitHub repository of [Geomstats](https://github.com/geomstats/geomstats).
+- Comparing embedding on trees in hyperbolic plane and variants, e.g. from [Sarkar 2011.](https://homepages.inf.ed.ac.uk/rsarkar/papers/HyperbolicDelaunayFull.pdf)
+- Hypothesis testing on manifolds, e.g. from [Osborne et al 2013.](https://www.sciencedirect.com/science/article/pii/S0047259X13000602).
+- (Extended/Unscented) Kalman Filters on Lie groups and variants, e.g. from [Bourmaud et al 2013.](https://hal.archives-ouvertes.fr/hal-00903252/document)
+- Gaussian Processes on Riemannian Manifolds and variants, e.g. from [Calandra et al 2014.](http://mlg.eng.cam.ac.uk/pub/pdf/CalPetRasDei16.pdf)
+- Barycenter Subspace Analysis on Manifolds and variants, e.g. from [Pennec 2016.](https://arxiv.org/abs/1607.02833)
+- Curve fitting on manifolds and variants, e.g. from [Gousenbourger et al 2018.](https://sites.uclouvain.be/absil/2018.04)
+- Recurrent models on manifolds and variants, e.g. from [Chakraborty et al 2018.](https://proceedings.neurips.cc/paper/2018/file/7070f9088e456682f0f84f815ebda761-Paper.pdf)
+- Geodesic CNNs on manifolds and variants, e.g. from [Masci et al 2018.](https://arxiv.org/pdf/1501.06297.pdf)
+- Variational autoencoders on Riemannian manifolds and variants, e.g. from [Miolane et al 2019.](https://arxiv.org/abs/1911.08147)
+- Probabilistic Principal Geodesic Analysis and variants, e.g. from [Zhang et al 2019.](https://arxiv.org/pdf/1909.01412.pdf)
+- Gauge-equivariant neural networks and variants, e.g. from [Cohen et al 2019.](https://arxiv.org/abs/1902.04615)
+- and many more, as long as you implement them using Geomstats computational primitives (e.g. exponential, geodesics, parallel transport, etc).
+
+Before starting your implementation, make sure that the algorithm that you want to contribute is not already in the [learning module of Geomstats](https://github.com/geomstats/geomstats/tree/master/geomstats/learning).
+
+The notebook provided in the `submission-example-*` folders is also an example of submission that can help the participants to design their proposal and to understand how to use/inherit from Scikit-Learning, Geomstats, Pytorch. Note that this example is "naive" on purpose and is only meant to give illustrative templates rather than to provide a meaningful data analysis. More examples on how to use the packages can be found on the GitHub repository of [Geomstats](https://github.com/geomstats/geomstats).
 
 The code should be compatible with Python 3.8 and make an effort to respect the Python style guide [PEP8](https://www.python.org/dev/peps/pep-0008/). The portion of the code using `geomstats` only needs to run with `numpy` or `pytorch` backends. However, it will be appreciated by the reviewers/voters if the code can run in all backends: `numpy`, `autograd`, `tensorflow` and `pytorch`, using geomstats `gs.`, when applicable.
 
