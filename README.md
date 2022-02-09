@@ -57,7 +57,7 @@ A submission should respect the following Jupyter Notebook’s structure:
   - Describe existing implementations, if any
 3. Implementation of the Learning Algorithm --- with guidelines:
   - Follow Scikit-Learn/Geomstats APIs, see [RiemannianKMeans](https://github.com/geomstats/geomstats/blob/d89ee0a4eb8cd178a5de5bccc095fda52d9c0732/geomstats/learning/kmeans.py#L16) example, or Pytorch base classes such as `torch.nn.Module`.
-  - IMPORTANT: Use Geomstats computational primitives (e.g. exponential, geodesics, parallel transport, etc).
+  - IMPORTANT: Use Geomstats computational primitives (e.g. exponential, geodesics, parallel transport, etc). Note that the functions in `geomstats.backend` are not considered computational primitives, as they are only wrappers around autograd, numpy, torch and tensorflow functions.
 4. Test on Synthetic Datasets and Benchmark
 5. Application to Real-World Datasets
 
