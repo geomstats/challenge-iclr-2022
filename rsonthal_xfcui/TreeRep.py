@@ -1,6 +1,43 @@
 
 import networkx as nx
 import geomstats.backend as gs
+from geomstats.geometery.symmetric_matrices import SymmetricMatrices 
+from geomstats.geometry.matrices import Matrices, MatricesMetric 
+from geomstats.geometry.riemannian_metric import RiemannianMetric
+from geomstats.geometry.poincare_ball import PoincareBall
+
+
+class TreeSpace(SymmetricMatrices):
+  def __init__(self, A = None, d = None):
+    n = d.shape[0]
+    super(TreeSpace, self).__init__(d)
+    if d != None:
+      self.d = d
+      T = TreeRep(d)
+      TreeRep.learnTree()
+      self.A = T.W
+    else:
+      self.A = A
+      self.d = None
+    
+  def gid(self, w,x,y):
+    return 0.5(self.d(w,x)+self.d(w,y)-self.d(x,y))
+   
+  def belongs(self, point, atol = gs.atol):
+    w = 0
+    for i in range(self.n):
+      for j in range(self.n):
+        for k in range(self.n):
+          a = self.gid(w,i,j)
+          b = self.gid(w,i,k)
+          c = self.gid(w,j,k)
+          if a < gs.min([b,c]) and b < gs.min([a,c]) < c < gs.min([a,b]):
+            return False
+    return True
+  
+  def embed_to_poincare_ball(self):
+    pass 
+    
 
 class TreeRep():
   """Class for running the TreeRep Algorithm.
