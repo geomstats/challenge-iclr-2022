@@ -69,6 +69,7 @@ A submission should respect the following Jupyter Notebook’s structure:
 - Gaussian Processes on Riemannian Manifolds and variants, e.g. from [Calandra et al 2014.](http://mlg.eng.cam.ac.uk/pub/pdf/CalPetRasDei16.pdf)
 - Barycenter Subspace Analysis on Manifolds and variants, e.g. from [Pennec 2016.](https://arxiv.org/abs/1607.02833)
 - Curve fitting on manifolds and variants, e.g. from [Gousenbourger et al 2018.](https://sites.uclouvain.be/absil/2018.04)
+- Smoothing splines on manifolds, e.g. from [Kim et al 2020.](https://arxiv.org/abs/1801.04978)
 - Recurrent models on manifolds and variants, e.g. from [Chakraborty et al 2018.](https://proceedings.neurips.cc/paper/2018/file/7070f9088e456682f0f84f815ebda761-Paper.pdf)
 - Geodesic CNNs on manifolds and variants, e.g. from [Masci et al 2018.](https://arxiv.org/pdf/1501.06297.pdf)
 - Variational autoencoders on Riemannian manifolds and variants, e.g. from [Miolane et al 2019.](https://arxiv.org/abs/1911.08147)
