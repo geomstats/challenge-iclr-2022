@@ -52,7 +52,7 @@ The principal developpers of Geomstats (i.e. the co-authors of Geomstats publish
 A submission should respect the following Jupyter Notebook’s structure:
 1. Introduction and Motivation
   - Explain and motivate the choice of learning algorithm
-2. Related Works and Implementations
+2. Related Work and Implementations
   - Contrast the chosen learning algorithms with other algorithms
   - Describe existing implementations, if any
 3. Implementation of the Learning Algorithm --- with guidelines:
