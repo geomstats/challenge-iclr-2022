@@ -1,7 +1,11 @@
 name: "Testing"
 
 
-
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   build:
@@ -11,6 +15,7 @@ jobs:
       matrix:
         os: [ubuntu-18.04]
         python-version: [3.8]
+        geomstats-backend : ['numpy',]
       fail-fast: false
 
     steps:
@@ -43,6 +48,8 @@ jobs:
           export PYTHONPATH=$PYTHONPATH:$(pwd)
 
       - name: run
+        env:
+          GEOMSTATS_BACKEND : ${{matrix.geomstats-backend}}
         run: |
           set -e
           for n in */*.ipynb
