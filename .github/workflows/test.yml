@@ -28,24 +28,25 @@ jobs:
       - name: install
         run:  |
           wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-          bash miniconda.sh -b -p $HOME/miniconda
-          export PATH="$HOME/miniconda/bin:$PATH"
-          hash -r
-          conda config --set always_yes yes --set changeps1 no
-          conda update -q conda
-          conda info -a
-          conda create -q -n test-env python=3.8
-          source activate test-env
+          # bash miniconda.sh -b -p $HOME/miniconda
+          # export PATH="$HOME/miniconda/bin:$PATH"
+          # hash -r
+          # conda config --set always_yes yes --set changeps1 no
+          # conda update -q conda
+          # conda info -a
+          # conda create -q -n test-env python=3.8
+          # source activate test-env
           pip install --upgrade pip setuptools wheel
           pip install -q -r requirements.txt
-          conda install -c conda-forge rdkit
-          pip install biopython
-          conda install -c conda-forge mdtraj
-          conda install --yes -c plotly plotly-orca
+          # conda install -c conda-forge rdkit
+          # pip install biopython
+          # conda install -c conda-forge mdtraj
+          # conda install --yes -c plotly plotly-orca
 
       - name: set Path 
         run:  |
           export PYTHONPATH=$PYTHONPATH:$(pwd)
+          jupyter --version
 
       - name: run
         env:
