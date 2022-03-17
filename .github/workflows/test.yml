@@ -1,0 +1,51 @@
+name: "Testing"
+
+
+
+
+jobs:
+  build:
+
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [ubuntu-18.04]
+        python-version: [3.8]
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build using Python ${{matrix.python-version}} and Backend ${{matrix.geomstats-backend}}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{matrix.python-version}}
+
+      - name: install
+        run:  |
+          wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+          bash miniconda.sh -b -p $HOME/miniconda
+          export PATH="$HOME/miniconda/bin:$PATH"
+          hash -r
+          conda config --set always_yes yes --set changeps1 no
+          conda update -q conda
+          conda info -a
+          conda create -q -n test-env python=$TRAVIS_PYTHON_VERSION
+          source activate test-env
+          pip install --upgrade pip setuptools wheel
+          pip install -q -r requirements.txt
+          conda install -c conda-forge rdkit
+          pip install biopython
+          conda install -c conda-forge mdtraj
+          conda install --yes -c plotly plotly-orca
+
+      - name: set Path 
+        run:  |
+          export PYTHONPATH=$PYTHONPATH:$(pwd)
+
+      - name: run
+        run: |
+          set -e
+          for n in */*.ipynb
+          do
+            jupyter nbconvert --to notebook --execute $n
+          done
