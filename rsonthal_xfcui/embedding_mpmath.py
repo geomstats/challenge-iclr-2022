@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import geomstats.backend as gs
 import geomstats.visualization as visualization
 from geomstats.geometry.hyperboloid import Hyperboloid
+from geomstats.geometry.poincare_ball import PoincareBall
+
 
 tree = nx.DiGraph()
 #tree.add_edges_from([(0, 1, {'weight': 10}), (1, 2, {'weight': 21}), 
@@ -17,8 +19,17 @@ tree.add_edges_from([(0, 1), (0, 2), (1, 3), (0, 4),(0, 5), (3, 6), (4, 7)])
                  #    (0, 5, {'weight': 54})])
 
 class hyp_embed():
-    def __init__(self, tree, epsilon, k = 1, is_weighted = False):
-        self.tree = tree
+    def __init__(self, G, epsilon, tau = None, k = 1, is_weighted = False):
+        edges = nx.edges(G)
+        DG = nx.DiGraph()
+        DG.add_edges_from(edges)
+        self.tree = nx.bfs_tree(G, 0)
+        self.tau = tau
+        edges = nx.edges(self.tree)
+        for e in edges:
+          src = e[0]
+          dst = e[1]
+          self.tree[src][dst]['weight'] = G[src][dst]['weight']
         self.k = k
         self.epsilon = epsilon
         self.is_weighted = is_weighted
@@ -27,7 +38,6 @@ class hyp_embed():
         
     
     def compute_tau(self):
-        
         tree = self.tree
         k = self.k
         epsilon = self.epsilon
@@ -74,9 +84,10 @@ class hyp_embed():
         z0 = mu[0] + mu[1]*j
         z = x[0] + x[1]*j
         result = fdiv(fsub(z0, z), fsub(1, fmul(conj(z0), z)))  #transformation function
-        x[0] = re(result)
-        x[1] = im(result)
-        return x
+        y = zeros(1,2)
+        y[0,0] = re(result)
+        y[0,1] = im(result)
+        return y[0,:]
 
     def add_children(self, p, x, edge_lengths):
         #map x to (0, 0)
@@ -115,7 +126,11 @@ class hyp_embed():
     
         root_children = list(tree.successors(0))
         d = len(root_children)   
-        tau = self.compute_tau()
+        if self.tau == None:
+          tau = self.compute_tau()
+        else:
+          tau = self.tau
+
     
         #lengths of unweighted edges
         edge_lengths = list(map(self.euc_to_hyp_dist, ones(d, 1) * tau))
@@ -149,7 +164,7 @@ class hyp_embed():
                 q.append(child)
         
             #lengths of unweighted edges
-            edge_lengths = list(map(self.euc_to_hyp_dist, ones(d, 1) * tau))
+            edge_lengths = list(map(self.euc_to_hyp_dist, ones(num_children, 1) * tau))
         
             #lengths of weighted edges
             if is_weighted:
@@ -167,7 +182,7 @@ class hyp_embed():
         return coords
 
     
-    def plot_geodesic_between_two_points(self, initial_point, end_point, n_steps=10, ax=None):
+    def plot_geodesic_between_two_points(self, initial_point, end_point, n_steps=12, ax=None):
         
         """Plot the geodesic between two points."""
         if not self.H2.belongs(initial_point):
@@ -178,50 +193,46 @@ class hyp_embed():
         geodesic = self.METRIC.geodesic(initial_point=initial_point, end_point=end_point)
 
         t = gs.linspace(0.0, 1.0, n_steps)
-        points = geodesic(t)
-        visualization.plot(points, ax=ax, space="H2_poincare_disk")
+        points = geodesic(t)[1:-1]
+        visualization.plot(points, ax=ax, space="H2_poincare_disk", color = "black", alpha = 0.5)
     
 
-    def visualize (self):
+    def visualize(self, ax):
         embeddings = self.embed()
         geodesics = []
-        #print(embeddings)
+        P2 = PoincareBall(2)
         for i in range(self.tree.number_of_nodes()):
             x_coord = embeddings[i, 0]
             y_coord = embeddings[i, 1]
-            plt.scatter(x_coord, y_coord, label = str(i))
+            ax.scatter(x_coord, y_coord, label = str(i), s=100)
             
             children = list(self.tree.successors(i))
         
             #convert mpmath floats to Python floats
             parent_x = float(nstr(embeddings[i,0], 15))
             parent_y = float(nstr(embeddings[i,1], 15))
-            initial_point = gs.array([parent_x, parent_y])
+            
+
+            initial_point = P2.projection(gs.array([parent_x, parent_y]))
             initial_point = self.H2._ball_to_extrinsic_coordinates(initial_point)
                          
             for child in children:
 
                 child_x = float(nstr(embeddings[child,0], 15))
                 child_y = float(nstr(embeddings[child,1], 15))
-                end_point =  gs.array([child_x, child_y])
+                end_point = P2.projection(gs.array([child_x, child_y]))
                 end_point = self.H2._ball_to_extrinsic_coordinates(end_point)
                 
                 geodesics.append((initial_point, end_point))
         
         #plot geodesics
-        ax = plt.gca()
         for geod in geodesics:
             initial_point, end_point = geod
             self.plot_geodesic_between_two_points(initial_point, end_point, ax=ax)
-            
-        plt.legend(loc='lower right', ncol=4)
-        plt.show()
         
-        
-     
         return embeddings
 
-test = hyp_embed(tree, 0.5)
-result = test.visualize()
-print(result)
+# test = hyp_embed(tree, 0.5)
+# result = test.visualize()
+# print(result)
 
