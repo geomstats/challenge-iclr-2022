@@ -36,9 +36,6 @@ jobs:
         env:
           GEOMSTATS_BACKEND : ${{matrix.geomstats-backend}}
         run: |
-          shopt -s extglob
-          for n in !(submission-example-1)/*.ipynb
-          do
-            poetry run jupyter nbconvert --to notebook --execute $n
-          done
+          chmod +x test_script.sh
+          ./test_script.sh
           
