@@ -31,7 +31,6 @@ jobs:
           export PYTHONPATH=$PYTHONPATH:$(pwd)
           export PATH="$HOME/.local/bin:$PATH"
           poetry install
-          poetry shell
           
       - name: run
         env:
