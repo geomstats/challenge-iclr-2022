@@ -1,5 +1,5 @@
 from TreeRepresentation import TreeRep
-import embedding_mpmath as EM
+import TreeEmbed as EM
 import networkx as nx
 import torch
 from mpmath import *
@@ -50,7 +50,7 @@ class TreeSpace(SymmetricMatrices):
     n x 2 array that stores the coordinates in the Poincare disk 
     for the embeddings 
     
-  self.embd : hyp_embed object
+  self.embd : HypEmbed object
     Object that performed Sarkar's algorithm for the tree self.T.G
   
   """
@@ -175,7 +175,7 @@ class TreeSpace(SymmetricMatrices):
     Stores the embeddings in self.coords.
     """
     self.tau = tau
-    self.embd = EM.hyp_embed(self.T.G, epsilon = epsilon, tau = tau, is_weighted = True)
+    self.embd = EM.HypEmbed(self.T.G, epsilon = epsilon, tau = tau, is_weighted = True)
     self.coords = self.embd.embed()
     return self.coords
   
@@ -193,7 +193,7 @@ class TreeSpace(SymmetricMatrices):
     Plots the embedding, along with the geodesics between data points
     that are connected via edges in the data. 
     """
-    self.embd = EM.hyp_embed(self.T.G, epsilon, tau = tau, is_weighted = True)
+    self.embd = EM.HypEmbed(self.T.G, epsilon, tau = tau, is_weighted = True)
     return self.embd.visualize(ax)
 
 
