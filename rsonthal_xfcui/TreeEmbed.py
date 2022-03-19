@@ -74,7 +74,7 @@ class HypEmbed():
         Outputs
         ----------
         
-        This computes the scale factor tau based on the give 
+        This computes the scale factor tau based on the given 
         epsilon. This is done using the first algorithm in 
         section 4 in https://homepages.inf.ed.ac.uk/rsarkar/papers/HyperbolicDelaunayFull.pdf
         """
@@ -173,7 +173,7 @@ class HypEmbed():
             This is a point in the poincare disk
         
         Note the graph has the edge p - x
-        In the directed graph self.tree p is a pared of x
+        In the directed graph self.tree p is a parent of x
         
         Outputs
         ----------
@@ -222,14 +222,14 @@ class HypEmbed():
         living in the euclidean disk, then we need to translate this 
         scale factor to one that fits inside the disk. 
         
-        That is, let 0 be the origin and x be a point at distance
-        unit distance (euclidean) from 0. Now tau x (as coordinates) 
-        will not like inside the disk (here the euclidean distance 
-        between 0 and tau x is tau). 
+        That is, let 0 be the origin and x be a point at unit distance 
+        (euclidean) from 0. Now tau x (as coordinates) will not lie 
+        inside the disk (here the euclidean distance between 0 and tau x 
+        is tau). 
         
         Here compute the scalar lambda such that lambda x is in the
-        poincare disk and the hyperbolic distance from 0 to lambd x 
-        is tau
+        poincare disk and the hyperbolic distance from 0 to lambda x 
+        is tau.
         
         """
         return sqrt(fdiv(fsub(cosh(tau), 1), fadd(cosh(tau), 1)))
@@ -313,7 +313,7 @@ class HypEmbed():
     
     def plot_geodesic_between_two_points(self, initial_point, end_point, n_steps=12, ax=None):
         """
-        Plot the geodesic between two points.
+        Plot the geodesic between initial_point and end_point.
         """
         if not self.H2.belongs(initial_point):
             raise ValueError("The initial point of the geodesic is not in H2.")
