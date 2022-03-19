@@ -6,19 +6,7 @@ import geomstats.visualization as visualization
 from geomstats.geometry.hyperboloid import Hyperboloid
 from geomstats.geometry.poincare_ball import PoincareBall
 
-
-tree = nx.DiGraph()
-#tree.add_edges_from([(0, 1, {'weight': 10}), (1, 2, {'weight': 21}), 
-                 #   (1, 3, {'weight': 31}), (0, 4, {'weight': 40}),
-                 #   (4, 5, {'weight': 54})])
-
-tree.add_edges_from([(0, 1), (0, 2), (1, 3), (0, 4),(0, 5), (3, 6), (4, 7)])
-
-#tree.add_edges_from([(0, 1, {'weight': 10}), (0, 2, {'weight': 21}), 
-                 #    (0, 3, {'weight': 31}), (0, 4, {'weight': 40}),
-                 #    (0, 5, {'weight': 54})])
-
-class hyp_embed():
+class HypEmbed():
     def __init__(self, G, epsilon, tau = None, k = 1, is_weighted = False):
         edges = nx.edges(G)
         DG = nx.DiGraph()
@@ -232,7 +220,4 @@ class hyp_embed():
         
         return embeddings
 
-# test = hyp_embed(tree, 0.5)
-# result = test.visualize()
-# print(result)
 
