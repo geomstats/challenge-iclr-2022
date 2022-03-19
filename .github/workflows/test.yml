@@ -37,4 +37,4 @@ jobs:
         env:
           GEOMSTATS_BACKEND : ${{matrix.geomstats-backend}}
         run: |
-          jupyter nbconvert --to notebook --execute */*.ipynb
+          poetry run jupyter nbconvert --to notebook --execute */*.ipynb
