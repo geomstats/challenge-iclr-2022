@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "challenge-iclr-2022"
 version = "0.1.0"
-description = ""
-authors = ["Saiteja Utpala <saitejautpala@gmail.com>"]
+description = "ICLR 2022 Computational Geometry and Topology Challenge"
+authors = ["Nina Miolane <nmiolane@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
