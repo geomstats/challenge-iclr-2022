@@ -4,6 +4,6 @@ do
     then
             poetry run jupyter nbconvert --to notebook --execute $n
     else
-            echo "Not notebooks found"
+            echo "No notebooks found!"
     fi
 done
