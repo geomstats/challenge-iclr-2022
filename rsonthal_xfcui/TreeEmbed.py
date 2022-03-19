@@ -7,6 +7,45 @@ from geomstats.geometry.hyperboloid import Hyperboloid
 from geomstats.geometry.poincare_ball import PoincareBall
 
 class HypEmbed():
+    """
+    This class runs Sarkars algorithm. Sarkars algorithm is as follows:
+    
+    1) Embed the root node at the origin
+    2) Let k be the number of children of the node
+    3) Compute cone angles so that we have k cones that are equal and 
+       maximal in size
+    4) Embed each child in the middle of its cone at the appropriate length
+    5) Pick a child node
+    6) Perform an isometry that maps the child node to the origin and repeats 
+       steps 2 - 5. 
+    7) Perform the inverse of the isometry
+    8) Repeat for child node that has not been embedded. 
+    
+    Inputs
+    ---------
+    
+    G : nx.Graph
+      This is the tree that we want to embed
+    
+    epsilon : float
+      This is maximally allowed distortion
+    
+    tau : float (optional)
+      This is the scale factor for the metric
+    
+    k : int (optional)
+      This relates to curvature of the manifold. 
+    
+    is_weighted : bool
+      Says if G has edges weights. If false edge weights are assumed to be 
+      equal to 0
+      
+    Outputs
+    ----------
+    
+    self.tree : nx.DiGraph
+      This is a directed graph that is rooted at 0
+    """
     def __init__(self, G, epsilon, tau = None, k = 1, is_weighted = False):
         edges = nx.edges(G)
         DG = nx.DiGraph()
@@ -26,6 +65,19 @@ class HypEmbed():
         
     
     def compute_tau(self):
+        """
+        Inputs
+        ---------
+        
+        None
+        
+        Outputs
+        ----------
+        
+        This computes the scale factor tau based on the give 
+        epsilon. This is done using the first algorithm in 
+        section 4 in https://homepages.inf.ed.ac.uk/rsarkar/papers/HyperbolicDelaunayFull.pdf
+        """
         tree = self.tree
         k = self.k
         epsilon = self.epsilon
@@ -38,13 +90,16 @@ class HypEmbed():
     
         #cone separation angle beta < pi / d
         beta = fdiv(pi, fmul('1.2', d_max))
+        
         #angle for cones 
         alpha = fsub(fdiv(fmul(2, pi), d_max), fmul(2, beta))
         nu = fmul(fmul(fneg(2), k), log(tan(fdiv(beta, 2))))
+        
         #Compute for each edge the minimum required length
         #L(v_i, v_j) = -2*k*ln(tan(alpha/2))
         #min length is the same for all edges
         min_length = fmul(fmul(fneg(2), k), log(tan(fdiv(alpha, 2))))
+        
         #Compute for each edge the minimum scaling factor
         #eta_vi_vj = L(v_i, v_j) / w(v_i, v_j)
         if is_weighted:
@@ -58,6 +113,7 @@ class HypEmbed():
             min_weight = 1
         
         eta_max = fdiv(min_length, min_weight)    
+        
         #Select tau > eta_max such that all edges are longer than nu*(1+epsilon)/epsilon
         #min weight of all edges
         tau = fadd(fdiv(fmul(fdiv(nu, min_weight), fadd(1, epsilon)), epsilon), eps)
@@ -69,6 +125,34 @@ class HypEmbed():
         return tau
 
     def hyp_isometry(self, mu, x):
+        """
+        Inputs
+        -------
+        
+        mu : array like
+            This length 2 array is the point that we want our 
+            isometry to map to 0
+        x : array like
+            This length 2 array is the point whose image we want
+            to compute under this isometry. 
+            
+        Outputs
+        --------
+        
+        y : array like
+            This length 2 array is the image of x under the isometry
+        
+        
+        Here we think of mu,x,y as living in the C (1 dimensional complex space)
+        Then the isometry f(x) is given by
+        
+        f(x) =.      mu - x
+                  -------------
+                  1 - conj(mu)x
+        where conj(mu) is the complex conjugate of mu. 
+        
+        Note this is an isometry on the Poincare disk for all choices of mu. 
+        """
         z0 = mu[0] + mu[1]*j
         z = x[0] + x[1]*j
         result = fdiv(fsub(z0, z), fsub(1, fmul(conj(z0), z)))  #transformation function
@@ -78,6 +162,27 @@ class HypEmbed():
         return y[0,:]
 
     def add_children(self, p, x, edge_lengths):
+        """
+        Inputs:
+        ----------
+        
+        p : array like
+            This is a point in the poincare disk
+        
+        x : array like
+            This is a point in the poincare disk
+        
+        Note the graph has the edge p - x
+        In the directed graph self.tree p is a pared of x
+        
+        Outputs
+        ----------
+        
+        points0 : array like
+            This is a num_children x 2 array that has the coordinates 
+            for the children of x in self.tree
+        """
+        
         #map x to (0, 0)
         p0 = self.hyp_isometry(x, p)
         c = len(edge_lengths)
@@ -101,10 +206,46 @@ class HypEmbed():
      
         return points0
 
-    def euc_to_hyp_dist(self, x):
-        return sqrt(fdiv(fsub(cosh(x), 1), fadd(cosh(x), 1)))
+    def euc_to_hyp_dist(self, tau):
+        """
+        Inputs 
+        ---------
+        
+        tau : float
+            This is a scale factor 
+            
+            
+        Outputs
+        ----------
+        
+        This is a scale factor, however, if we think of points as
+        living in the euclidean disk, then we need to translate this 
+        scale factor to one that fits inside the disk. 
+        
+        That is, let 0 be the origin and x be a point at distance
+        unit distance (euclidean) from 0. Now tau x (as coordinates) 
+        will not like inside the disk (here the euclidean distance 
+        between 0 and tau x is tau). 
+        
+        Here compute the scalar lambda such that lambda x is in the
+        poincare disk and the hyperbolic distance from 0 to lambd x 
+        is tau
+        
+        """
+        return sqrt(fdiv(fsub(cosh(tau), 1), fadd(cosh(tau), 1)))
 
     def embed(self):
+        """
+        Inputs
+        -------
+        None
+        
+        Outputs
+        --------
+        
+        Runs Sarkars algorithm. See class documentation for a description
+        of the algorithm. 
+        """
         tree = self.tree
         k = self.k
         epsilon = self.epsilon
@@ -171,8 +312,9 @@ class HypEmbed():
 
     
     def plot_geodesic_between_two_points(self, initial_point, end_point, n_steps=12, ax=None):
-        
-        """Plot the geodesic between two points."""
+        """
+        Plot the geodesic between two points.
+        """
         if not self.H2.belongs(initial_point):
             raise ValueError("The initial point of the geodesic is not in H2.")
         if not self.H2.belongs(end_point):
@@ -186,6 +328,10 @@ class HypEmbed():
     
 
     def visualize(self, ax):
+        """
+        Plot the embeddings and the geodesics correponding to edges
+        in the tree. 
+        """
         embeddings = self.embed()
         geodesics = []
         P2 = PoincareBall(2)
