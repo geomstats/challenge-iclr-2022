@@ -53,10 +53,11 @@ class HypEmbed():
         self.tree = nx.bfs_tree(G, 0)
         self.tau = tau
         edges = nx.edges(self.tree)
-        for e in edges:
-          src = e[0]
-          dst = e[1]
-          self.tree[src][dst]['weight'] = G[src][dst]['weight']
+        if is_weighted:
+          for e in edges:
+            src = e[0]
+            dst = e[1]
+            self.tree[src][dst]['weight'] = G[src][dst]['weight']
         self.k = k
         self.epsilon = epsilon
         self.is_weighted = is_weighted
