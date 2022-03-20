@@ -60,7 +60,7 @@ class TreeSpace(SymmetricMatrices):
     self.d = d
     T = TreeRep(d)
     T.learn_tree()
-    self.A = nx.adjacency_matrix(T.G, weight = 'weight')
+    #self.A = nx.adjacency_matrix(T.G, weight = 'weight')
     self.T = T
     self.coords = None
   
