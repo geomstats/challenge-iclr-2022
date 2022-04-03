@@ -1,7 +1,6 @@
 import warnings
 warnings.filterwarnings('ignore')
 import torch
-import geomstats.backend as gs
 import numpy as np
 import matplotlib.pyplot as plt
 import pickle
