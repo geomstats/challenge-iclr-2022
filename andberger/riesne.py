@@ -1,8 +1,5 @@
 import math
 import sys
-import copy
-from time import time
-from tqdm import trange
 
 import numpy as np
 import torch
@@ -18,6 +15,67 @@ import riesne_utils as ru
 
 
 class Riesne(BaseEstimator):
+
+    """
+    Riemannian Stochastic Neighbor Embedding.
+
+    Parameters
+    ----------
+    model: RiesneModel
+        The high-dimensional Riemannian manifold that the data to be visualized is lying on. 
+        The model must derive from the abstract base model `RiesneModel` and implement the 
+        two following methods:
+        - compute_pairwise_geodesic_distances:
+            Compute a matrix of pairwise distances by finding geodesics between all 
+            pairwise points on the manifold and computing their lengths.
+        - compute_log_riemannian_volume_measure_ratios
+            Compute a matrix of pairwise Riemannian volume measure ratios, i.e.:
+                H0(x,l) = (det(G(x)) / det(G(l)))^(1/2)
+                Where G(p) for point p on the manifold is the metric matrix evaluated at point p.
+
+    n_components : int, default=2
+        Dimension of the embedded space. Use n_components=3 for spherical embeddings.
+
+    perplexity : float, default=30.0
+        The perplexity is related to the number of nearest neighbors that
+        is used in other manifold learning algorithms. Larger datasets
+        usually require a larger perplexity. Consider selecting a value
+        between 5 and 50. Different values can result in significantly
+        different results.
+
+    early_exaggeration : float, default=12.0
+        Controls how tight natural clusters in the original space are in
+        the embedded space and how much space will be between them. For
+        larger values, the space between natural clusters will be larger
+        in the embedded space. Again, the choice of this parameter is not
+        very critical. If the cost function increases during initial
+        optimization, the early exaggeration factor or the learning rate
+        might be too high.
+
+    learning_rate : float or 'auto', default=200.0
+        The learning rate for t-SNE is usually in the range [10.0, 1000.0]. If
+        the learning rate is too high, the data may look like a 'ball' with any
+        point approximately equidistant from its nearest neighbours. If the
+        learning rate is too low, most points may look compressed in a dense
+        cloud with few outliers. If the cost function gets stuck in a bad local
+        minimum increasing the learning rate may help.
+
+    n_iter : int, default=1000
+        Maximum number of iterations for the optimization. Should be at
+        least 250.
+
+    n_iter_without_progress : int, default=300
+        Maximum number of iterations without progress before we abort the
+        optimization, used after 250 initial iterations with early
+        exaggeration. Note that progress is only checked every 50 iterations so
+        this value is rounded to the next multiple of 50.
+        .. versionadded:: 0.17
+           parameter *n_iter_without_progress* to control stopping criteria.
+
+    min_grad_norm : float, default=1e-7
+        If the gradient norm is below this threshold, the optimization will
+        be stopped.
+    """
     # Control the number of exploration iterations with early_exaggeration on
     _EXPLORATION_N_ITER = 250
 
@@ -34,10 +92,7 @@ class Riesne(BaseEstimator):
             n_iter=1000,
             n_iter_without_progress=100, 
             min_grad_norm=1e-7,
-            metric="euclidean", 
             init="random", 
-            random_state=None, 
-            method='kmeans', 
             angle=0.5,
             n_jobs=None, 
             n_clusters=75,
@@ -52,12 +107,7 @@ class Riesne(BaseEstimator):
         self.n_iter = n_iter
         self.n_iter_without_progress = n_iter_without_progress
         self.min_grad_norm = min_grad_norm
-        self.metric = metric
         self.init = init
-        self.random_state = random_state
-        self.method = method
-        self.angle = angle
-        self.n_jobs = n_jobs
 
     def fit(self, X):
         """Fit"""

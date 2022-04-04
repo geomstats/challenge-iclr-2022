@@ -177,22 +177,19 @@ def _compute_p_values(model, X, perplexity):
 
 def _kl_divergence_func(params, P, degrees_of_freedom, n_samples, n_components):
     X_embedded = params.reshape(n_samples, n_components)
-    print(X_embedded.shape)
 
     # Q is a heavy-tailed distribution: Student's t-distribution
     dist = pdist(X_embedded, "sqeuclidean")
-    print(dist.shape)
     dist /= degrees_of_freedom
     dist += 1.
     dist **= (degrees_of_freedom + 1.0) / -2.0
-    Q = np.maximum(dist / (2.0 * np.sum(dist)), ru.MACHINE_EPSILON)
-    print(Q.shape)
+    Q = np.maximum(dist / (2.0 * np.sum(dist)), MACHINE_EPSILON)
 
     # Optimization trick below: np.dot(x, y) is faster than
     # np.sum(x * y) because it calls BLAS
 
     # Objective: C (Kullback-Leibler divergence of P and Q)
-    kl_divergence = 2.0 * np.dot(P, np.log(np.maximum(P, ru.MACHINE_EPSILON) / Q))
+    kl_divergence = 2.0 * np.dot(P, np.log(np.maximum(P, MACHINE_EPSILON) / Q))
 
     # Gradient: dC/dY
     # pdist always returns double precision distances. Thus we need to take
