@@ -1,0 +1,16 @@
+.idea/*
+data/*
+datasets/*
+bin/*
+neuroseed/*
+*.pkl
+*.fasta
+*.tsv
+*.txt
+__init__.*
+*.so
+*.pyc
+*.o
+*.c
+*.html
+hypersmorf/processed_data/smorf_subset.csv
