@@ -20,18 +20,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build using Python ${{matrix.python-version}} and Backend ${{matrix.geomstats-backend}}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: ${{matrix.python-version}}
-          fetch-depth: 0
+          fetch-depth: 2
 
       - name: Get changed files using a comma separator
         id: changed-files-comma
         uses: tj-actions/changed-files@v18.6
         with:
-          separator: ","
           files: |
-            *.ipynb
+            **/*.ipynb
 
       - name: List all added files
         run: |
