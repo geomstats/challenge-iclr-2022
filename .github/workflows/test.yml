@@ -50,8 +50,9 @@ jobs:
         env:
           GEOMSTATS_BACKEND : ${{matrix.geomstats-backend}}
         run: |
-           for file in ${{ steps.changed-files.outputs.added_files }}; do
-            echo "$file was added"
-            poetry run jupyter nbconvert --to notebook --execute $n
-          done
+            for file in ${{ steps.changed-files.outputs.added_files }}
+            do
+              echo "$file was added"
+              poetry run jupyter nbconvert --to notebook --execute $n
+            done
           
