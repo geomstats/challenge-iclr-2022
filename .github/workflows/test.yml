@@ -35,7 +35,7 @@ jobs:
 
       - name: List all added files
         run: |
-          for file in ${{ steps.changed-files.outputs.added_files }}; do
+          for file in ${{ steps.changed-files-comma.outputs.added_files }}; do
             echo "$file was added"
           done
 
@@ -50,7 +50,7 @@ jobs:
         env:
           GEOMSTATS_BACKEND : ${{matrix.geomstats-backend}}
         run: |
-            for file in ${{ steps.changed-files.outputs.added_files }}
+            for file in ${{ steps.changed-files-comma.outputs.added_files }}
             do
               echo "$file was added"
               poetry run jupyter nbconvert --to notebook --execute $n
