@@ -1,6 +1,9 @@
 name: "Testing"
 
 
+
+
+
 on:
   push:
     branches: [main]
@@ -19,11 +22,24 @@ jobs:
       fail-fast: false
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Build using Python ${{matrix.python-version}} and Backend ${{matrix.geomstats-backend}}
         uses: actions/setup-python@v2
         with:
           python-version: ${{matrix.python-version}}
+          fetch-depth: 0
+
+      - name: Get changed files using a comma separator
+        id: changed-files-comma
+        uses: tj-actions/changed-files@v18.6
+        with:
+          separator: ","
+
+      - name: List all added files
+        run: |
+          for file in ${{ steps.changed-files.outputs.added_files }}; do
+            echo "$file was added"
+          done
 
       - name: install
         run:  |
@@ -31,6 +47,10 @@ jobs:
           export PYTHONPATH=$PYTHONPATH:$(pwd)
           export PATH="$HOME/.local/bin:$PATH"
           poetry install
+
+      - name: Get changed files using defaults
+        id: changed-files
+        uses: tj-actions/changed-files@v18.6
           
       - name: run
         env:
