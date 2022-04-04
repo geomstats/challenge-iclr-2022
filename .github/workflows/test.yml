@@ -52,6 +52,6 @@ jobs:
             for file in ${{ steps.changed-files-comma.outputs.added_files }}
             do
               echo "$file was added"
-              poetry run jupyter nbconvert --to notebook --execute $n
+              poetry run jupyter nbconvert --to notebook --execute $file
             done
           
