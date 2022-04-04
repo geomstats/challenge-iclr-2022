@@ -1,9 +1,5 @@
 name: "Testing"
 
-
-
-
-
 on:
   push:
     branches: [main]
@@ -34,6 +30,8 @@ jobs:
         uses: tj-actions/changed-files@v18.6
         with:
           separator: ","
+          files: |
+            *.ipynb
 
       - name: List all added files
         run: |
@@ -47,15 +45,13 @@ jobs:
           export PYTHONPATH=$PYTHONPATH:$(pwd)
           export PATH="$HOME/.local/bin:$PATH"
           poetry install
-
-      - name: Get changed files using defaults
-        id: changed-files
-        uses: tj-actions/changed-files@v18.6
           
       - name: run
         env:
           GEOMSTATS_BACKEND : ${{matrix.geomstats-backend}}
         run: |
-          chmod +x test_script.sh
-          ./test_script.sh
+           for file in ${{ steps.changed-files.outputs.added_files }}; do
+            echo "$file was added"
+            poetry run jupyter nbconvert --to notebook --execute $n
+          done
           
