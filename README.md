@@ -2,7 +2,7 @@
 
 Welcome to the ICLR 2022 Computational Geometry & Topology challenge 2022 --- by the [ICLR 2022 Workshop on Geometrical and Topological Representation Learning](https://gt-rl.github.io/).
 
-Lead organizers: Adele Myers, Saiteja Utpala, and Nina Miolane (UC Santa Barbara).
+Lead organizers: [Adele Myers](https://ahma2017.wixsite.com/adelemyers), Saiteja Utpala, and Nina Miolane (UC Santa Barbara).
 
 ## Description of the challenge
 
