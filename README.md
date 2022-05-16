@@ -4,6 +4,9 @@ Welcome to the ICLR 2022 Computational Geometry & Topology challenge 2022 --- by
 
 Lead organizers: [Adele Myers](https://ahma2017.wixsite.com/adelemyers), Saiteja Utpala, and Nina Miolane (UC Santa Barbara).
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6554617.svg)](https://doi.org/10.5281/zenodo.6554617)
+
+
 ## Description of the challenge
 
 The purpose of this challenge is to foster reproducible research in geometric (deep) learning, by crowdsourcing the open-source implementation of learning algorithms on manifolds. Participants are asked to contribute code for a published/unpublished algorithm, following Scikit-Learn/Geomstats' or pytorch's APIs and computational primitives, benchmark it, and demonstrate its use in real-world scenarios.
